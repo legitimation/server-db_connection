@@ -4,11 +4,9 @@ var bodyParser  = require('body-parser');
 var mongoose    = require('mongoose');
 var User = require('./src/models/user');
 var Post = require('./src/models/post');
-
-
+var Comment=require('./src/models/comment');
 
 const dbURL = 'mongodb://localhost:27017/myDb'
-
 
 var db = mongoose.connection;
 
@@ -26,8 +24,6 @@ mongoose.connect(dbURL, {
   });
 
 
-
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
@@ -36,10 +32,11 @@ app.use(bodyParser.urlencoded({
 var port = process.env.PORT || 80;
 
 
-var router_user = require('./src/routes/index_user')(app,User);
+var router_user = require('./src/routes/index_user')(app, User);
 
-var router_post = require('./src/routes/index_post')(app,Post);
+var router_post = require('./src/routes/index_post')(app, Post);
 
+var router_comment = require('./src/routes/index_comment.js')(app, Comment);
 
 var server = app.listen(port, function(){
     console.log("Express server has started on port " + port)
